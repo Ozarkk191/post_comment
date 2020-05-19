@@ -7,29 +7,31 @@ class PostRepository {
 
   Future<List<PostWithCommentModel>> fetchMyPostList() async {
     final response = await _client.get('posts', withAccessToken: false);
-    final commentResponse =
+    final commentsResponse =
         await _client.get('comments', withAccessToken: false);
 
     List<PostWithCommentModel> _postWithComment =
         new List<PostWithCommentModel>();
-    List<Comments> _commentList = new List<Comments>();
+    // List<Comments> _commentList = new List<Comments>();
 
     response.forEach((posts) {
       var post = Posts.fromJson(posts);
+      // print(post.toJson());
+      List<Comments> _commentList = new List<Comments>();
 
-      commentResponse.forEach((comments) {
-        _commentList.clear();
+      commentsResponse.forEach((comments) {
+        // _commentList.clear();
         var comment = Comments.fromJson(comments);
 
         if (comment.postId == post.id) {
-          var commentData = Comments(
-            id: comment.id,
-            postId: comment.postId,
-            name: comment.name,
-            email: comment.email,
-            body: comment.body,
-          );
-          _commentList.add(commentData);
+          // var commentData = Comments(
+          //   id: comment.id,
+          //   postId: comment.postId,
+          //   name: comment.name,
+          //   email: comment.email,
+          //   body: comment.body,
+          // );
+          _commentList.add(comment);
         }
       });
       var pwc = PostWithCommentModel(

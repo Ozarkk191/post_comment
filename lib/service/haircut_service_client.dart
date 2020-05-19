@@ -21,7 +21,7 @@ class HaircutServiceClient {
       {Map<String, String> queryParameters,
       bool withAccessToken = false}) async {
     final uri = Uri.https(_host, '/$path', queryParameters);
-    print('haircut ${uri.toString()}');
+    // print('haircut ${uri.toString()}');
     var responseJson;
     final headers = await _buildHeaders(withAccessToken: withAccessToken);
     try {
@@ -39,22 +39,22 @@ class HaircutServiceClient {
   Future<dynamic> post(String path,
       {RequestBodyParameters data, bool withAccessToken = false}) async {
     final uri = Uri.https(_host, '/$path');
-    print(uri.toString());
-    print(json.encode(data));
+    // print(uri.toString());
+    // print(json.encode(data));
     var responseJson;
     final headers = await _buildHeaders(
         withAccessToken: withAccessToken, withContentType: true);
-    print('header :: $headers');
+    // print('header :: $headers');
     try {
-      print('try 0');
+      // print('try 0');
       final response = await http.post(uri,
           headers: headers,
           body: data != null ? json.encode(data.toJson()) : null);
-      print('response :: $response');
+      // print('response :: $response');
       responseJson = _returnResponse(response);
-      print('try');
+      // print('try');
     } on SocketException {
-      print('chath');
+      // print('chath');
       throw FetchDataException(null, 'No Internet connection.');
     }
     return responseJson;
@@ -67,8 +67,8 @@ class HaircutServiceClient {
       {RequestBodyParameters data, bool withAccessToken = false}) async {
     var dio = Dio.Dio();
     final uri = Uri.https(_host, '/$path');
-    print(uri.toString());
-    print(data.toString());
+    // print(uri.toString());
+    // print(data.toString());
     try {
       final response = await dio.post(
         uri.toString(),
@@ -80,7 +80,7 @@ class HaircutServiceClient {
       switch (response.statusCode) {
         case 200:
           var responseJson = json.decode(response.data.toString());
-          print(responseJson);
+          // print(responseJson);
           return responseJson;
         case 400:
           throw BadRequestException(
@@ -118,13 +118,13 @@ class HaircutServiceClient {
   Future<dynamic> put(String path,
       {RequestBodyParameters data, bool withAccessToken = false}) async {
     final uri = Uri.https(_host, '/$path');
-    print(uri.toString());
-    print(json.encode(data));
+    // print(uri.toString());
+    // print(json.encode(data));
     var responseJson;
     final headers = await _buildHeaders(
         withAccessToken: withAccessToken, withContentType: true);
     try {
-      print(json.encode(data.toJson()));
+      // print(json.encode(data.toJson()));
       final response = await http.put(uri,
           headers: headers,
           body: data != null ? json.encode(data.toJson()) : null);
@@ -141,7 +141,7 @@ class HaircutServiceClient {
   Future<dynamic> delete(String path,
       {RequestBodyParameters data, bool withAccessToken = false}) async {
     final uri = Uri.https(_host, '/$path');
-    print(uri.toString());
+    // print(uri.toString());
     var responseJson;
     final headers = await _buildHeaders(
         withAccessToken: withAccessToken, withContentType: true);
@@ -170,7 +170,7 @@ class HaircutServiceClient {
       String accessToken = await storage.read(key: 'accessToken');
       if (accessToken != null) {
         headers.putIfAbsent('Authorization', () => 'Bearer ' + accessToken);
-        print('Authorization: Bearer ' + accessToken);
+        // print('Authorization: Bearer ' + accessToken);
       }
     }
     return headers;
@@ -182,7 +182,7 @@ class HaircutServiceClient {
       case 200:
       case 201:
         var responseJson = json.decode(response.body);
-        print(responseJson);
+        // print(responseJson);
         return responseJson;
       case 400:
         throw BadRequestException(400, _getErrorMessage(response.body));

@@ -9,7 +9,7 @@ class CommentRepository {
     final commentResponse =
         await _client.get('comments', withAccessToken: false);
     commentResponse.map<PostWithCommentModel>((post) {
-      print(post);
+      // print(post);
     }).toList(growable: false);
 
     return response
